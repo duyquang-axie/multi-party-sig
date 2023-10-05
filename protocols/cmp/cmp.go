@@ -4,6 +4,7 @@ import (
 	"github.com/taurusgroup/multi-party-sig/internal/round"
 	"github.com/taurusgroup/multi-party-sig/pkg/ecdsa"
 	"github.com/taurusgroup/multi-party-sig/pkg/math/curve"
+	"github.com/taurusgroup/multi-party-sig/pkg/paillier"
 	"github.com/taurusgroup/multi-party-sig/pkg/party"
 	"github.com/taurusgroup/multi-party-sig/pkg/pool"
 	"github.com/taurusgroup/multi-party-sig/pkg/protocol"
@@ -41,7 +42,7 @@ func Keygen(group curve.Curve, selfID party.ID, participants []party.ID, thresho
 		Threshold:        threshold,
 		Group:            group,
 	}
-	return keygen.Start(info, pl, nil)
+	return keygen.StartFromSecret(info, pl, nil, paillier.NewSecretKey(pl))
 }
 
 // Refresh allows the parties to refresh all existing cryptographic keys from a previously generated Config.
